@@ -73,6 +73,9 @@ import html.parser # pip install html-parser
 import soupsieve # pour pouvoir récupérer facilement du contenu html là où il n'y a pas de 'class' ni de 'id'
 
 
+# utliser fct° 
+# def getBookInfo(product_page_url = 'http://books.toscrape.com/catalogue/the-exiled_247/index.html')
+# getBookInfo used for e.a. categ & items... check out python.org on fct° for scraping
 
 # l'url de la page produit pour effectuer notre 1er requête:
 product_page_url = 'http://books.toscrape.com/catalogue/the-exiled_247/index.html'
@@ -88,7 +91,8 @@ else:
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    print('URL de la page: ' + product_page_url) # pour imprimer l'url de la page produit
+    #print('URL de la page: ' + product_page_url) # pour imprimer l'url de la page produit
+    print(f'URL de la page: {product_page_url}')
    
     links = [] # pour effectuer les boucles concernant les carateritiques des produits  
     tds = soup.find_all('td') 
@@ -99,13 +103,22 @@ else:
         #link = a['href'] # pour scraper les 'href'
         #links.append('http://books.toscrape.com/' + link) pour scraper les 'href'
         links.append(td.text) # le lien pour scraper tous les 'td'
-    print('universal_ product_code: {}'.format(links[0]))  # <=> print('UPC: ' + links[0])
-    title = soup.find('h1') # trouver h1 pour lancer l'mpression du titre ci-dessous
-    print('title: ' + title.text) # pour imprimer le titre du livre
-    print('price_including_tax: {}'.format(links[2]).replace("Â", " ")) # pour imprimer le prix ttc du livre
-    print('price_excluding_tax: {}'.format(links[3]).replace("Â", " "))  # pour imprimer le prix ht du livre
-    print('number_available: {}'.format(links[5]).replace("In stock (", " ").replace(" available)", " ")) # pour imprimer la Q° dispo du livre - pas très beau, code à améliorer
+    #print('universal_product_code: {}'.format(links[0]))  # <=> print('UPC: ' + links[0])
+    print(f'universal_product_code: {links[0]}')
     
+    title = soup.find('h1') # trouver h1 pour lancer l'mpression du titre ci-dessous
+    #print('title: ' + title.text) # pour imprimer le titre du livre
+    print(f'title: {title.text}')
+
+    #print('price_including_tax: {}'.format(links[2]).replace("Â", " ")) # pour imprimer le prix ttc du livre
+    print(f'price_including_tax: {links[2].replace("Â", " ")}')
+
+    #print('price_excluding_tax: {}'.format(links[3]).replace("Â", " "))  # pour imprimer le prix ht du livre
+    print(f'price_excluding_tax: {links[3].replace("Â", " ")}')
+
+    #print('number_available: {}'.format(links[5]).replace("In stock (", " ").replace(" available)", " ")) # pour imprimer la Q° dispo du livre - pas très beau, code à améliorer
+    print(f'number_available: {links[5].replace("In stock (", " ").replace(" available)", " ")}')
+
     # Pour imrpimer la description de produit
     product_description = soup.select('.product_page > p')
     print('product_description: {}'.format(product_description).replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ") ) # l'affichage sort mais le contenu contient des crochets [] dans lequel le texte est entouré de tag <p></p>
