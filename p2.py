@@ -96,22 +96,69 @@ with open('urls.txt', 'r') as inf:
             print(response.encoding)
 
 """
+
 # l'url de la page produit pour effectuer notre 1er requête:
-product_page_url = 'http://books.toscrape.com/catalogue/the-exiled_247/index.html'
+url = 'http://books.toscrape.com/catalogue/category/books/mystery_3/page-2.html'
 
 # on va utiliser la méthode 'GET' pour charger l'url ci-dessus 
-response = requests.get(product_page_url)
+response = requests.get(url)
 
 if response.status_code != 200:
     print("Le site est inaccessible.  Veuillez réessayer plus tard")
 else:
-            # print("Le site est accessible, vous pouvez continuer.")
+    # print("Le site est accessible, vous pouvez continuer.")
 
+    
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    #print('URL de la page: ' + product_page_url) # pour imprimer l'url de la page produit
-    print(f'product_page_url: {product_page_url}')
-        
+    # on va récupérer les liens de chaque livre d'une catégorie bien précise
+    # li.col-xs-6:nth-child(1) > article:nth-child(1) > h3:nth-child(3) > a:nth-child(1)
+
+    links = []
+    book_urls = soup.find_all("article", {"class":"product_pod"})
+    for book_url in book_urls:  
+        #print(image['src']) #print image source
+        #print(image['alt']) #print alternate text
+        a = book_url.find('a')
+        link = a['href'].replace('../../../', '')
+        links.append('http://books.toscrape.com/catalogue/' + link)
+    print(links)
+    #print('image_url: {}'.format(links[0])) 
+
+    #http://books.toscrape.com/the-mysterious-affair-at-styles-hercule-poirot-1_452/index.html
+
+    """
+        <article class="product_pod">
+            <div class="image_container">
+                <a href="../../../sharp-objects_997/index.html">
+                    <img src="../../../../media/cache/32/51/3251cf3a3412f53f339e42cac2134093.jpg" alt="Sharp Objects" class="thumbnail">
+                </a>
+            </div>
+            <p class="star-rating Four">
+            <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+            </p>
+            <h3>
+                <a href="../../../sharp-objects_997/index.html" title="Sharp Objects">Sharp Objects</a>
+            </h3>
+            <div class="product_price">
+                <p class="price_color">£47.82</p>
+                <p class="instock availability">
+                    <i class="icon-ok"></i>In stock
+                </p>
+                <form>
+                    <button type="submit" class="btn btn-primary btn-block" data-loading-text="Adding...">Add to basket</button>
+                </form>
+            </div>
+        </article>
+    """
+
+    # ----- # ---- #
+
+    """ 
     links = [] # pour effectuer les boucles concernant les carateritiques des produits  
     tds = soup.find_all('td') 
     # print(len(tds)) == 7, ce qui nous permettra de créer un boucle pour le caractéristique des livres (upc, prix, etc.)
@@ -168,6 +215,9 @@ else:
         links.append('http://books.toscrape.com/' + link)
     print('image_url: {}'.format(links[0])) 
     # print(links[0]) # imprime sans l'en-tête
+
+    # --- # --- #
+    """
 
 
 """
@@ -272,4 +322,83 @@ Première étape: Scraping page produit - sans créer le fichier csv
                 links.append('http://books.toscrape.com/' + link)
             print('image_url: {}'.format(links[0])) 
             # print(links[0]) # imprime sans l'en-tête
+"""
+
+# Cette portion de code extrait les infos d'une page produit sans le mettre dans un fichier csv
+"""
+
+# l'url de la page produit pour effectuer notre 1er requête:
+product_page_url = 'http://books.toscrape.com/catalogue/the-exiled_247/index.html'
+
+# on va utiliser la méthode 'GET' pour charger l'url ci-dessus 
+response = requests.get(product_page_url)
+
+if response.status_code != 200:
+    print("Le site est inaccessible.  Veuillez réessayer plus tard")
+else:
+            # print("Le site est accessible, vous pouvez continuer.")
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    #print('URL de la page: ' + product_page_url) # pour imprimer l'url de la page produit
+    print(f'product_page_url: {product_page_url}')
+        
+    links = [] # pour effectuer les boucles concernant les carateritiques des produits  
+    tds = soup.find_all('td') 
+    # print(len(tds)) == 7, ce qui nous permettra de créer un boucle pour le caractéristique des livres (upc, prix, etc.)
+    # [print(td.text) for td in tds] : pour tester l'affichage du boucle avec les caractéristiques
+    for td in tds:
+        #a = td.find('a') # pour scraper les 'href'
+        #link = a['href'] # pour scraper les 'href'
+        #links.append('http://books.toscrape.com/' + link) pour scraper les 'href'
+        links.append(td.text) # le lien pour scraper tous les 'td'
+    #print('universal_product_code: {}'.format(links[0]))  # <=> print('UPC: ' + links[0])
+    print(f'universal_product_code: {links[0]}')
+            
+    title = soup.find('h1') # trouver h1 pour lancer l'mpression du titre ci-dessous
+    #print('title: ' + title.text) # pour imprimer le titre du livre
+    print(f'title: {title.text}')
+
+    #print('price_including_tax: {}'.format(links[2]).replace("Â", " ")) # pour imprimer le prix ttc du livre
+    print(f'price_including_tax: {links[2].replace("Â", " ")}')
+
+    #print('price_excluding_tax: {}'.format(links[3]).replace("Â", " "))  # pour imprimer le prix ht du livre
+    print(f'price_excluding_tax: {links[3].replace("Â", " ")}')
+
+    #print('number_available: {}'.format(links[5]).replace("In stock (", " ").replace(" available)", " ")) # pour imprimer la Q° dispo du livre - pas très beau, code à améliorer
+    print(f'number_available: {links[5].replace("In stock (", " ").replace(" available)", " ")}')
+
+    # Pour imrpimer la description de produit
+    product_description = soup.select('.product_page > p')
+    print('product_description: {}'.format(product_description).replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ") ) # l'affichage sort mais le contenu contient des crochets [] dans lequel le texte est entouré de tag <p></p>
+    # print(f'product_description: {product_description.replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ")}') # f-string ici ne fonctionne pas
+
+    # Pour afficher la 'category'
+    category = soup.find("ul", {"class":"breadcrumb"}).find_all('li')[2]
+    catname = BeautifulSoup(str(category).replace("\n", " "), 'html.parser').get_text().encode("utf-8")
+    print('category: ' + str(catname).replace("'", " ").replace('b', '')) # de la déco à enlever autour de la catégorie: 'b'\nMystery\n''
+
+    # Pour afficher review_rating
+    links = []
+    review_rating = soup.find_all('p', {'class': 'star-rating'})
+    for p in review_rating:  
+    #print(image['src']) #print image source
+    #print(image['alt']) #print alternate text
+        link = p['class'][1]
+        links.append(link)
+    print('review_rating: {}'.format(links[0]).replace("['star-rating',", " ").replace("]", "").replace("'", " ")) 
+    # print(f'review_rating: {link[0].replace("[", "").replace("'", "").replace("star-rating',", "").replace("]", "").replace("'", "")}') # f-string ne fonctionne pas non plus ici
+
+    # Pour afficher image_url
+    links = []
+    image_url = soup.find_all('img')
+    for image in image_url:  
+        #print(image['src']) #print image source
+        #print(image['alt']) #print alternate text
+        link = image['src']
+        links.append('http://books.toscrape.com/' + link)
+    print('image_url: {}'.format(links[0])) 
+    # print(links[0]) # imprime sans l'en-tête
+
+
 """
