@@ -1,6 +1,8 @@
+# --- SOMMAIRE --- #
+
 """
 
-Résumé du projet de webscraping [4 étapes/demandes du client]:
+Résumé du projet de webscraping, en 4 étapes (demandes-client):
 
     1. Choisir une page produit, 
         1a. Récupérer les infos suivantes:
@@ -45,6 +47,8 @@ Résumé du projet de webscraping [4 étapes/demandes du client]:
 
 """
 
+# --- SCRIPTS --- #
+
 """
 
 Deuxième étape: Appliquer "Etape 1" aux produits d'une catégorie
@@ -69,7 +73,7 @@ Deuxième étape: Appliquer "Etape 1" aux produits d'une catégorie
 import requests # pip install requests
 from bs4 import BeautifulSoup # pip install bs4 avec BeautifulSoup
 import html.parser # pip install html-parser
-# import time # timer entre pour chaque boucle
+import time # timer entre chaque boucle pour éviter la procédure d'être bloqué par le serveur du site d'extraction
 import soupsieve # pour pouvoir récupérer facilement du contenu html là où il n'y a pas de 'class' ni de 'id'
 
 
@@ -96,6 +100,46 @@ with open('urls.txt', 'r') as inf:
             print(response.encoding)
 
 """
+
+
+#"""
+# --- Script pour extraire les données des 2 pages de la catégorie 'Mystery' --- #
+
+links = []
+
+for i in range(1, 3):
+    url = 'http://books.toscrape.com/catalogue/category/books/mystery_3/page-' + str(i) + '.html'
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        print("Le site est inaccessible.  Veuillez réessayer plus tard")
+    else:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        print('Page: ' + str(i))
+
+        # Pour afficher l'url de chaque livre dans une catégorie
+        book_urls = soup.find_all("article", {"class":"product_pod"})
+        for book_url in book_urls:  
+            a = book_url.find('a')
+            link = a['href'].replace('../../../', '')
+            links.append('http://books.toscrape.com/catalogue/' + link)
+        time.sleep(1) # pour ralentir le boucle de 2sec pour éviter que l'extraction d'être bloquée
+
+print(len(links))
+
+with open('booksUrls.txt', 'w') as file: # ce fichier 'booksUrls.txt' contient les urls de chaque livre de la catégorie "mysterie"
+    for link in links: # nous allons éventuellement l'utiliser pour scraper les données de chaque livre de la catégorie 'mystery'
+        file.write(link + '\n')
+
+
+# --- # --- #
+
+#"""
+
+
+# --- Script pour afficher les url de chaque livre d'une catégorie bien précise --- #
+
+""" 
 
 # l'url de la page produit pour effectuer notre 1er requête:
 url = 'http://books.toscrape.com/catalogue/category/books/mystery_3/page-2.html'
@@ -125,10 +169,15 @@ else:
     print(links)
     #print('image_url: {}'.format(links[0])) 
 
-    #http://books.toscrape.com/the-mysterious-affair-at-styles-hercule-poirot-1_452/index.html
-
-    """
-        <article class="product_pod">
+    # les pages de la catégorie "mystery": 
+        # http://books.toscrape.com/catalogue/category/books/mystery_3/page-1.html 
+        # http://books.toscrape.com/catalogue/category/books/mystery_3/page-2.html
+    
+"""
+    
+""" books' container
+    
+    <article class="product_pod">
             <div class="image_container">
                 <a href="../../../sharp-objects_997/index.html">
                     <img src="../../../../media/cache/32/51/3251cf3a3412f53f339e42cac2134093.jpg" alt="Sharp Objects" class="thumbnail">
@@ -154,11 +203,34 @@ else:
                 </form>
             </div>
         </article>
-    """
+    
+"""
 
-    # ----- # ---- #
+# ----- # ---- #
 
-    """ 
+
+# --- Etape intermediaire btw bookpage & categ page -- Script pour afficher les info d'un livre bien précis sur une page donnée --- #
+
+
+""" 
+
+
+# l'url de la page produit pour effectuer notre 1er requête:
+product_page_url = 'http://books.toscrape.com/catalogue/the-exiled_247/index.html'
+
+# on va utiliser la méthode 'GET' pour charger l'url ci-dessus 
+response = requests.get(product_page_url)
+
+if response.status_code != 200:
+    print("Le site est inaccessible.  Veuillez réessayer plus tard")
+else:
+            # print("Le site est accessible, vous pouvez continuer.")
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    #print('URL de la page: ' + product_page_url) # pour imprimer l'url de la page produit
+    print(f'product_page_url: {product_page_url}')
+        
     links = [] # pour effectuer les boucles concernant les carateritiques des produits  
     tds = soup.find_all('td') 
     # print(len(tds)) == 7, ce qui nous permettra de créer un boucle pour le caractéristique des livres (upc, prix, etc.)
@@ -186,7 +258,7 @@ else:
 
     # Pour imrpimer la description de produit
     product_description = soup.select('.product_page > p')
-    print('product_description: {}'.format(product_description).replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ") ) # l'affichage sort mais le contenu contient des crochets [] dans lequel le texte est entouré de tag <p></p>
+    print('product_description: {}'.format(product_description).replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ")) # l'affichage sort mais le contenu contient des crochets [] dans lequel le texte est entouré de tag <p></p>
     # print(f'product_description: {product_description.replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ")}') # f-string ici ne fonctionne pas
 
     # Pour afficher la 'category'
@@ -213,11 +285,20 @@ else:
         #print(image['alt']) #print alternate text
         link = image['src']
         links.append('http://books.toscrape.com/' + link)
-    print('image_url: {}'.format(links[0])) 
+    imageurl = 'image_url: {}'.format(links[0])
+    print(imageurl) 
     # print(links[0]) # imprime sans l'en-tête
 
-    # --- # --- #
-    """
+    # Pour sauvegarder dans un fichier externe
+    #f = open('oneProduct.txt', 'r')
+    #f.write(f'product_page_url: {product_page_url}' + ' , ' + f'universal_product_code: {links[0]}' + ' , ' + f'title: {title.text}' + ' , ' + f'price_including_tax: {links[2].replace("Â", " ")}' + ' , ' + f'price_excluding_tax: {links[3].replace("Â", " ")}' + ' , ' + f'number_available: {links[5].replace("In stock (", " ").replace(" available)", " ")}' + ' , ' + 'product_description: {}'.format(product_description).replace("<p>", " ").replace("</p>", " ").replace("[", " ").replace("]", " ") + ' , ' + 'category: ' + str(catname).replace("'", " ").replace('b', '') + ' , ' + 'review_rating: {}'.format(links[0]).replace("['star-rating',", " ").replace("]", "").replace("'", " ") + ' , ' + 'image_url: {}'.format(links[0]) + '\n' )
+    #for row in f:
+    #    print(row)
+    #f.close()
+
+"""
+
+ # --- # --- #
 
 
 """
@@ -324,7 +405,8 @@ Première étape: Scraping page produit - sans créer le fichier csv
             # print(links[0]) # imprime sans l'en-tête
 """
 
-# Cette portion de code extrait les infos d'une page produit sans le mettre dans un fichier csv
+# -- 1 -- Script pour extraire les infos d'une page produit sans le mettre dans un fichier csv --- #
+
 """
 
 # l'url de la page produit pour effectuer notre 1er requête:
