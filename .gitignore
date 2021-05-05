@@ -7,10 +7,11 @@ ENV/
 env.bak/
 venv.bak/
 
-# Fichiers CSV
+# Fichiers CSV & txt
 allCategories.csv
 oneCategory.csv
 oneProduct.csv
+booksUrls.txt
 
 # Dossier
 images
