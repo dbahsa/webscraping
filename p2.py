@@ -1,3 +1,5 @@
+# --- CECI EST MON BRUOILLON -- #
+
 # --- SOMMAIRE --- #
 
 """
@@ -214,7 +216,7 @@ else:
 #""" 
 
 with open('booksUrls.txt', 'r') as inf: # 'booksUrls.txt' contient les urls de chaque livre de la catégorie "mystery"
-    with open('oneCategory.csv', 'w') as outf: # cette ligne (pour créer notre fichier csv) a été rajoutée après avoir traversé toutes les pages contenu dans 'booksUrls.txt' 
+    with open('p2_categorie.csv', 'w') as outf: # cette ligne (pour créer notre fichier csv) a été rajoutée après avoir traversé toutes les pages contenu dans 'booksUrls.txt' 
         outf.write('product_page_url, universal_product_code, title, price_including_tax, price_excluding_tax, number_available, product_description, category, review_rating, image_url\n')
         for row in inf: # nous utilisons le fichier 'booksUrls.txt'  pour scraper les données de chaque livre de la catégorie 'mystery'
             product_page_url = row.strip()
