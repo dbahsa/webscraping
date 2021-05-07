@@ -25,7 +25,7 @@ Première étape: Scraping page produit - sans créer le fichier csv
             1a.8. category
             1a.9. review_rating
             1a.10. image_url
-        1b. sauvegarder le tout dans un fichier csv (à exclure de 'git'); je l'ai appelé ici 'oneProduct.csv'
+        1b. sauvegarder le tout dans un fichier csv (à exclure de 'git'); je l'ai appelé ici 'p2_livre.csv'
 
 """
 

@@ -17,7 +17,9 @@ p2_categorie.csv
 p2_livre.csv
 p2_site.csv
 p2.py
+categsUrls.txt
 
 # Dossier
 images
 images/
+.DS_Store

@@ -114,6 +114,10 @@ with open('categsUrls.txt', 'r') as inf_1: # 'categsUrls.txt' contient les urls 
                 print("Le site est inaccessible.  Veuillez réessayer plus tard")
                 soup = BeautifulSoup(response.text, 'html.parser')
 
+                # --- tout ce qui est en bas de cette ligne est à modifier -- #
+
+                
+
                 with open('p2_site.csv', 'w') as outf: # on crée notre fichier csv après avoir traversé toutes les pages contenues dans 'categsUrls.txt' 
                     # outf.write(): pour créer l'en-tête de 'p2_categorie.csv'
                     

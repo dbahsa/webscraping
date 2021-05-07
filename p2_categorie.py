@@ -26,7 +26,7 @@ Deuxième étape: Appliquer "Etape 1" aux produits d'une catégorie
             2a.8. category
             2a.9. review_rating
             2a.10. image_url
-        2b. Sauvegarder le tout dans un fichier csv (à exclure de 'git'); je l'ai appelé ici 'oneCategory.csv'
+        2b. Sauvegarder le tout dans un fichier csv (à exclure de 'git'); je l'ai appelé ici 'p2_categorie.csv'
 
 """
 
@@ -94,7 +94,7 @@ with open('booksUrls.txt', 'w') as file: # booksUrls.txt contient les urls de ch
 # ----- # ---- # ----- # ---- # ----- # ---- # ----- # ---- #
 
 
-# 4. Script pour extraire et sauvegarde en csv toutes les données des ouvrages d'une catégorie
+# 4. Script pour extraire et sauvegarder en csv toutes les données des ouvrages d'une catégorie
 
 #""" 
 
