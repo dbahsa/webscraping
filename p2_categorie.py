@@ -105,14 +105,12 @@ with open('booksUrls.txt', 'r') as inf: # 'booksUrls.txt' contient les urls de c
         for row in inf: # nous utilisons le fichier 'booksUrls.txt'  pour scraper les données de chaque livre de la catégorie 'mystery'
             product_page_url = row.strip()
 
-            # on va utiliser la méthode 'GET' pour charger l'url chaque page des livres de la catégorie 'mystery' via 'product_page_url' contenu dans 'booksUrls.txt'
             response = requests.get(product_page_url)
 
             if response.status_code != 200:
                 print("Le site est inaccessible.  Veuillez réessayer plus tard")
             else:
-                # print("Le site est accessible, vous pouvez continuer.") # pas vraiment nécessaire ici vu que le script fonctionne
-
+                
                 soup = BeautifulSoup(response.text, 'html.parser')
 
                 # --- les lignes ci-après concernent l'extraction des données de chaque livre --- #
@@ -121,57 +119,54 @@ with open('booksUrls.txt', 'r') as inf: # 'booksUrls.txt' contient les urls de c
                 prodUrl = product_page_url
                 print(prodUrl)
                 
-                # pour effectuer les boucles concernant les carateritiques des produits 
+                # pour obtenir les carateritiques de chaque livre 
                 links = []  
                 tds = soup.find_all('td') 
-                # print(len(tds)) == 7, ce qui nous permettra de créer un boucle pour le caractéristique des livres (upc, prix, etc.)
-                # pour tester l'affichage du boucle avec les caractéristiques: [print(td.text) for td in tds]
+                
+                # pour tester l'affichage les caractéristiques de chaque livre 
                 for td in tds:
-                    #a = td.find('a') # pour scraper les 'href'
-                    #link = a['href'] # pour scraper les 'href'
-                    #links.append('http://books.toscrape.com/' + link) pour scraper les 'href'
                     links.append(td.text) # le lien pour scraper tous les 'td'
                 
                 # pour afficher l'UPC de chaque livre
                 upc = links[0]
-                print(upc) # une autre façon de l'écrire: print('universal_product_code: {}'.format(links[0]))  # <=> print(f'"UPC: " + links[0]')
+                print(upc)
 
                 # pour afficher le titre de chaque livre  
-                title = soup.find('h1') # trouver h1 pour lancer afficher le titre
+                title = soup.find('h1')
                 titre = title.text.replace(",", " -")
                 print(titre)
 
-                # pour afficher le prix ttc du livre # print('price_including_tax: {}'.format(links[2]).replace("Â", " ")): on est parti de ce code pour écrire ce qui suit:
+                # pour afficher le prix ttc de chaque livre
                 prixTtc = links[2].replace("Â", " ")
                 print(prixTtc)
 
-                # pour afficher le prix ht du livre # print('price_excluding_tax: {}'.format(links[3]).replace("Â", " ")) 
+                # pour afficher le prix ht de chaque livre  
                 prixHt = links[3].replace("Â", " ")
                 print(prixHt)
 
-                # pour obtenir la quantité dispo du livre => pas très beau, code à améliorer, un peu comme partout :) #print('number_available: {}'.format(links[5]).replace("In stock (", " ").replace(" available)", " ")) 
+                # pour obtenir la quantité disponible de chaque livre 
                 numberAvail = links[5].replace("In stock (", " ").replace(" available)", " ")
                 print(numberAvail)
 
-                # Pour extraire la description de produit
+                # Pour extraire la description de chaque livre 
                 product_description = soup.select('.product_page > p')
                 desc = str(product_description).replace('<p>', ' ').replace('</p>', ' ').replace('[', '"').replace(']', '"')
                 print(desc)
 
-                # Pour afficher la 'category'
+                # Pour afficher la categorie de chaque livre
                 category = soup.find("ul", {"class":"breadcrumb"}).find_all('li')[2]
                 catname = BeautifulSoup(str(category).replace("\n", " "), 'html.parser').get_text().encode("utf-8")
                 categ = str(catname).replace("'", " ").replace('b', '')
-                print(categ) # de la déco à enlever autour de la catégorie: 'b'\nMystery\n''
+                print(categ) 
 
-                # Pour afficher review_rating
+                # Pour afficher le review_rating de chaque livre 
                 links = []
                 review_rating = soup.find_all('p', {'class': 'star-rating'})
                 for p in review_rating:
                     link = p['class'][1]
                     links.append(link)
                 reviewR = links[0].replace("['star-rating',", " ").replace("]", "").replace("'", " ")
-                print(reviewR) # le code suivant a été utilisé pour obtenir ce qui précède pour obtenir 'reviewR': print(f'review_rating: {link[0].replace("[", "").replace("'", "").replace("star-rating',", "").replace("]", "").replace("'", "")}') # f-string ne fonctionne pas non plus ici
+                print(reviewR) 
 
                 # Pour afficher image_url
                 links = []
@@ -180,11 +175,10 @@ with open('booksUrls.txt', 'r') as inf: # 'booksUrls.txt' contient les urls de c
                     link = image['src']
                     links.append('http://books.toscrape.com/' + link)
                 imageurl = links[0]
-                print(imageurl)  # print(links[0]) # imprime sans l'en-tête
+                print(imageurl)
 
                 outf.write(str(prodUrl) + ' , ' + str(upc) + ' , ' + str(titre) + ' , ' + str(prixTtc) + ' , ' + str(prixHt) + ' , ' + str(numberAvail) + ' ,' + str(desc) + ' ,' + str(categ) + ' , ' + str(reviewR) + ' , ' + str(imageurl) + '\n' )
 
-            #time.sleep(1) # pas nécessaire ici car le site est en libre accès (pour le moment!)
 
 #"""
 
