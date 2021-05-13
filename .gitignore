@@ -11,10 +11,59 @@ venv.bak/
 allCategories.csv
 oneCategory.csv
 oneProduct.csv
-p2_categorie.csv
 p2_livre.csv
 p2_site.csv
 p2.py
+p2_categorie_young-adult.py
+p2_categorie_academic.py
+p2_categorie_Add a comment.py
+p2_categorie_adult-fiction.py
+p2_categorie_art.py
+p2_categorie_autobiography.py
+p2_categorie_biography.py
+p2_categorie_business.py
+p2_categorie_Childrens.py
+p2_categorie_christian-fiction.py
+p2_categorie_christian.py
+p2_categorie_Classics.py
+p2_categorie_contemporary.py
+p2_categorie_crime.py
+p2_categorie_cultural.py
+p2_categorie_Default.py
+p2_categorie_erotica.py
+p2_categorie_Fantasy.py
+p2_categorie_Fiction.py
+p2_categorie_food-and-drink.py
+p2_categorie_health.py
+p2_categorie_Historical Fiction.py
+p2_categorie_historical.py
+p2_categorie_history.py
+p2_categorie_horror.py
+p2_categorie_humor.py
+p2_categorie_Music.py
+p2_categorie_mystery.py
+p2_categorie_new-adult.py
+p2_categorie_Nonfiction.py
+p2_categorie_novels.py
+p2_categorie_paranormal.py
+p2_categorie_parenting.py
+p2_categorie_Philosophy.py
+p2_categorie_poetry.py
+p2_categorie_politics.py
+p2_categorie_psychology.py
+p2_categorie_Religion.py
+p2_categorie_Romance.py
+p2_categorie_Science Fiction.py
+p2_categorie_science.py
+p2_categorie_self-help.py
+p2_categorie_Sequential Art.py
+p2_categorie_short-stories.py
+p2_categorie_spirituality.py
+p2_categorie_Sports and Games.py
+p2_categorie_suspense.py
+p2_categorie_thriller.py
+p2_categorie_Travel.py
+p2_categorie_Womens Fiction.py
 
 # Fichiers csv
 booksUrls.txt
