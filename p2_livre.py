@@ -1,4 +1,4 @@
-# --- SOMMAIRE --- #
+# --- SOMMAIRE --- # 
 
 # 1. Demandes du client
 # 2. Packages/Modules pré-requis
@@ -106,9 +106,8 @@ with open('p2_livre.csv', 'w') as outf: # on crée notre fichier csv après avoi
 
                 # Pour extraire la description de produit
         product_description = soup.select('.product_page > p')
-        desc = str(product_description).replace(",", "_").replace('<p>', ' ').replace('</p>', ' ').replace('[', ' ').replace(']', ' ')
-        print(desc) # l'affichage sort mais le contenu contient des crochets [] dans lequel le texte est entouré de tag <p></p>
-                # ci-dessus, la virgule dans tout le contenu a été remplacée par '_' pour être capable de conserver cette donnée dans la colonne 'product_description'
+        desc = str(product_description).replace('<p>', ' ').replace('</p>', ' ').replace('[', '"').replace(']', '"')
+        print(desc)
 
                 # Pour afficher la 'category'
         category = soup.find("ul", {"class":"breadcrumb"}).find_all('li')[2]
