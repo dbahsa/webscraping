@@ -24,7 +24,7 @@
 # ----- # ---- # ----- # ---- # ----- # ---- # ----- # ---- #
 
 
-# 2. Packages/Modules pré-requis
+# 2. Packages/Modules pré-requis:
 
 import requests # pour envoyer des requêtes HTTP via Python
 from bs4 import BeautifulSoup # pour faciliter l'extraction des liens de notre page web
@@ -36,18 +36,16 @@ import time # pour mettre un delai en sec entre chaque boucle pour éviter la pr
 # ----- # ---- # ----- # ---- # ----- # ---- # ----- # ---- #
 
 
-# 3. Script pour récupérer les urls des catégories puis les mettre dans un fichier csv
+    # 3a. Script pour Extraire toutes les catégories de livres disponibles:
 
 """
 
 Info catégories: 
-    - Quantité: 50;
-    - url: http://books.toscrape.com/
+    - Quantité: 50
+    - Scrapées à partir: http://books.toscrape.com/
+    - Le fichier contenant les urls des catégories: categsUrls.txt
 
 """
-
-
-# Script pour extraire les urls de toutes les catégories:
 
 
 """
@@ -59,7 +57,7 @@ response = requests.get(url)
 if response.status_code != 200:
     print('Le site est inaccessible.  Veuillez réessayer plus tard')
 else:
-    # print(response.status_code)
+    
     soup = BeautifulSoup(response.text, 'html.parser')
     
     # Pour afficher toutes les catégories (#.nav > li:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > a)
@@ -78,9 +76,6 @@ else:
             
     time.sleep(3) # pour ralentir le boucle de 3sec pour éventuellement éviter que l'extraction des données soit bloquée
 
-#print(len(links)) et print(links) ont été utilisés pour verifier le nombre de catégories ainsi que leurs urls respectifs
-
-
 with open('categsUrls.txt', 'w') as file: # categsUrls.txt contient les urls de chaque catégorie du site
     for link in links: # nous allons utiliser categsUrls.txt pour scraper les données de chaque cchaque catégorie du site
         file.write(link + '\n')
@@ -88,12 +83,62 @@ with open('categsUrls.txt', 'w') as file: # categsUrls.txt contient les urls de 
 """
 
 
+
+# ----- # ---- # ----- # ---- # ----- # ---- # ----- # ---- #
+
+
+    # 3b. Script pour extraire les informations produit de tous les livres appartenant à toutes les différentes catégories:
+        # 3b.1. Pour commencer, nous allons extraire et mettre dans 'allBooksUrls.txt' tous les urls de tous les livres à partir de la page d'accueil (http://books.toscrape.com/)
+        # 3b.2. Ensuite, les données des livres seront extraites et sauvegardées dans 'allBooksUrls.csv'
+    
+
+#""" 3b.1.
+
+links = []
+
+for i in range(1, 51):
+    url = 'http://books.toscrape.com/catalogue/page-' + str(i) + '.html'
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        print("Le site est inaccessible.  Veuillez réessayer plus tard")
+    else:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # print('Page: ' + str(i)) # pour vérifier si le nombre de page où le scraping est effectué est bien correct; ici = 50
+
+        # Pour afficher l'url de chaque livre
+        book_urls = soup.find_all("article", {"class":"product_pod"})
+        for book_url in book_urls:  
+            a = book_url.find('a')
+            link = a['href'].replace('../../../', '')
+            links.append('http://books.toscrape.com/catalogue/' + link)
+        time.sleep(1) # pour ralentir le boucle de 1sec pour éventuellement éviter que l'extraction des données soit bloquée
+
+# print(len(links)) # pour verifier le nombre total des livres; ici = 1000
+
+
+with open('allBooksUrls.txt', 'w') as file: # 'allBooksUrls.txt' contient les urls de tous les livres peu importe leur catégorie
+    for link in links: # ensuite 'allBooksUrls.txt' sera utilisé scraper les données de chaque livre de toutes les catégories
+        file.write(link + '\n')
+
+#"""
+
+
+
+
+
+
+
+
+
+
+
 # ----- # ---- # ----- # ---- # ----- # ---- # ----- # ---- #
 
 
 # 4. Script pour extraire et sauvegarde en csv toutes les données des ouvrages de toutes les catégories
 
-#"""
+"""
 
 with open('categsUrls.txt', 'r') as inf_1: # 'categsUrls.txt' contient les urls de chaque catégorie
 
@@ -112,11 +157,11 @@ with open('categsUrls.txt', 'r') as inf_1: # 'categsUrls.txt' contient les urls 
 
             if response.ok:
                 print("Le site est inaccessible.  Veuillez réessayer plus tard")
-                soup = BeautifulSoup(response.text, 'html.parser')
+                soup = BeautifulSoup(response.content, 'html.parser')
 
                 # --- tout ce qui est en bas de cette ligne est à modifier -- #
 
-                
+
 
                 with open('p2_site.csv', 'w') as outf: # on crée notre fichier csv après avoir traversé toutes les pages contenues dans 'categsUrls.txt' 
                     # outf.write(): pour créer l'en-tête de 'p2_categorie.csv'
@@ -210,7 +255,7 @@ with open('categsUrls.txt', 'r') as inf_1: # 'categsUrls.txt' contient les urls 
 
                         #time.sleep(1) # pas nécessaire ici car le site est en libre accès (pour le moment!)
 
-#"""
+"""
 
 
 
