@@ -7,17 +7,21 @@ ENV/
 env.bak/
 venv.bak/
 
-# Fichiers
+# Fichiers csv
 allCategories.csv
 oneCategory.csv
 oneProduct.csv
-booksUrls.txt
-oneProduct.txt
 p2_categorie.csv
 p2_livre.csv
 p2_site.csv
 p2.py
+
+# Fichiers csv
+booksUrls.txt
+oneProduct.txt
 categsUrls.txt
+allBooksUrls.txt
+
 
 # Dossier
 images
