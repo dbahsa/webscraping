@@ -48,38 +48,6 @@ Info catégories:
 """
 
 
-"""
-
-links = []
-url = 'http://books.toscrape.com/'
-response = requests.get(url)
-
-if response.status_code != 200:
-    print('Le site est inaccessible.  Veuillez réessayer plus tard')
-
-else:
-    
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Pour afficher toutes les catégories (#.nav > li:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > a)
-    
-    # Pour afficher l'url de chaque catégorie
-    categ_urls = soup.select(".nav > li:nth-child(1) > ul:nth-child(2) > li")
-    for categ_url in categ_urls:  
-        a = categ_url.find('a')
-        link = a['href'] #.replace('../../../', '')
-        links.append('http://books.toscrape.com/' + link)
-            
-    time.sleep(2) # pour ralentir le boucle de 2sec pour éventuellement éviter que l'extraction des données soit bloquée
-
-with open('categsUrls.txt', 'w') as file: # categsUrls.txt contient les urls de chaque catégorie du site
-    for link in links: # nous allons utiliser categsUrls.txt pour scraper les données de chaque cchaque catégorie du site
-        file.write(link + '\n')
-
-"""
-
-
-
 # ----- # ---- # ----- # ---- # ----- # ---- # ----- # ---- #
 
 
@@ -162,6 +130,5 @@ else:
 
     with open(imageName, 'wb') as f:
         shutil.copyfileobj(response.raw,f)
-
 
 """
