@@ -1,6 +1,6 @@
 # --- CECI EST MON BRUOILLON -- #
 
-# --- SOMMAIRE --- #
+# --- SOMMAIRE -- #
 
 """
 
