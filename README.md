@@ -17,23 +17,19 @@ _Nous allons expliquer ci-après comment créer et activer l'environnement virtu
 
 #### II. Activation de l'environnement virtuel
 1. Pour activer l'environnement virtuel à partir de votre terminal, veuillez exécuter la commande `source env/bin/activate`  (`env/Scripts/activate.bat` si vous êtes sous Windows). A ce stade, votre terminal doit ajoute le nom de votre environnement au début de chaque ligne de votre terminal (ici, **‘env’**).
-2. Ensuite, pour que l'**environnement virtuel** soit **fonctionnel**, il va falloir **ajout**er les **paquets** Python requis à cet effet, soit en installant manuellement chaque paquet avec `pip`, soit en utilisant le fichier `requirements.txt` pour installer automatiquement tous les paquets.  Pour notre application, les paquets dont nous avons besoin sont `requests`, `bs4`,  `html.parser` et  `time`,  qui peuvent être installés de la manière suivante.
+2. Ensuite, pour que l'**environnement virtuel** soit **fonctionnel**, il va falloir **ajout**er les **paquets** Python requis à cet effet, soit en installant manuellement chaque paquet avec `pip`, soit en utilisant le fichier `requirements.txt` pour installer automatiquement tous les paquets.  Pour notre application, les paquets dont nous avons besoin sont `requests`, `bs4`,  `html.parser`,  `shutil`,  `soupsieve`  et  `time`,  qui peuvent être installés de la manière suivante.
 
 ### INSTALLATION
 
 ##### Installation _"manuelle"_
-Veuillez exécuter les commandes ci-après sur votre terminal, ensuite vous vérifiez avec `pip freeze` si tous les paquets sont bien repertoriés.
-> `$ pip install requests`
-    `$ pip install bs4` 
-    `$ pip install html.parser` 
-    `$ pip install time` 
+Avec `$ pip install` vous pouvez installer les paquets/modules requis pour le bon fonctionnement des sccripts. 
 
 ##### Installation _"automatique"_
 Ajouter dans votre repertoire local **Projet** une copie du fichier _"requirements.txt"_ (provenant du dossier compressé "P2_Nzimbi_Didier.zip"), ensuite exécuter la commande:
 > `$ pip install -r requirements.txt`
 
 # DEMARRAGE
-Voilà, vous êtes prêt à exécuter l'application maintenant.
+Voilà, vous êtes prêt à exécuter l'application maintenant.  Notez qu'il est nécessaire d'enlever les commentaires dans certains emplacements du code pour exécuter certains scripts.
 
 # Fabriqué avec
 * [DILLINGER](https://dillinger.io) - Editeur de texte
