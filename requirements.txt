@@ -1,5 +1,9 @@
 requests==2.25.1
+beautifulsoup4==4.9.3
 bs4==0.0.1
 html-parser==0.2
-shutil
+soupsieve==2.2.1
+csv23==0.3.2
+random==1.1.1
+shutil==1.0.0
 
