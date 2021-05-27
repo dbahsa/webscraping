@@ -31,10 +31,10 @@ Ajouter dans votre repertoire local **Projet** une copie du fichier _"requiremen
 
 # DEMARRAGE
 Voilà, vous pouvez dès à présent exécuter le script contenu dans le fichier `mon_script_webScraping.py`, en enlevant selon les besoins les commentaires sur les lignes suivantes:
-> ligne 114: info_d_un_livre() 
-> ligne 121: les_livres_d_une_categorie()
-> ligne 350: les_livres_de_toutes_les_categories()
-> ligne 643: les_images_du_site()
+1. ligne 114: `info_d_un_livre()`
+2. ligne 121: `les_livres_d_une_categorie()`
+3. ligne 350: `les_livres_de_toutes_les_categories()`
+4. ligne 643: `les_images_du_site()`
 
 # Fabriqué avec
 * [DILLINGER](https://dillinger.io) - Editeur de texte
