@@ -7,11 +7,6 @@ ENV/
 env.bak/
 venv.bak/
 
-
-# Fichiers txt
-
-
-
 # Dossier
 images
 images/
