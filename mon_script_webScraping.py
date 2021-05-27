@@ -1,5 +1,4 @@
 # --- SOMMAIRE --- # 
-
 # 1. Extraction et sauvegarde sous csv les données d'un livre
 # 2. Extraction et sauvegarde sous csv les données de tous les livres d'une catégorie
 # 3. Extraction et sauvegarde dans différents fichiers csv de données de tous les livres de toutes les catégories
