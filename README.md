@@ -40,7 +40,7 @@ Voilà, vous pouvez dès à présent exécuter le script contenu dans le fichier
 # Fabriqué avec
 * [DILLINGER](https://dillinger.io) - Editeur de texte
 * [Forthebadge](http://forthebadge.com) - Badges en-tête
-* Avec la contribution d' [Openclassrooms](http://Openclassrooms.com)
+* Avec la contribution de Julien L. @ [Openclassrooms](http://Openclassrooms.com)
 
 # Auteur
 * **Didier K Nzimbi** _alias_ [dbahsa](https://github.com/dbahsa)
