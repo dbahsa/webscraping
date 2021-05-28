@@ -17,3 +17,7 @@ categorie_csv
 categorie_csv/
 livre
 livre/
+__pycache__  
+
+# Fichiers .py
+__init__.py 
