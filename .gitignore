@@ -20,4 +20,7 @@ livre/
 __pycache__  
 
 # Fichiers .py
-__init__.py 
+__init__.py
+
+# Fichiers .txt
+lien_GitHub.txt
