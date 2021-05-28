@@ -30,11 +30,12 @@ Ajouter dans votre repertoire local **Projet** une copie du fichier _"requiremen
 > `$ pip install -r requirements.txt`
 
 # DEMARRAGE
-Voilà, vous pouvez dès à présent exécuter le script contenu dans le fichier `mon_script_webScraping.py`, en enlevant selon les besoins les commentaires sur les lignes suivantes:
-1. ligne 114: `info_d_un_livre()`
-2. ligne 121: `les_livres_d_une_categorie()`
-3. ligne 350: `les_livres_de_toutes_les_categories()`
-4. ligne 643: `les_images_du_site()`
+Voilà, vous pouvez dès à présent exécuter le script contenu dans le fichier `main.py`, en choisissant le type de contenu qui vous intéresse, ou bien vous pouvez également exécuter individuellement les fichiers ci-dessous :
+1. `any_book.py`: Pour consulter les données d'un livre;
+2. `books_any_category.py`: Pour voir les données de tous les livres d'une catégorie lambda;
+3. `all_books_all_categories.py`: Pour obtenir les données de tous les livres de toutes les catégories;
+4. `all_images.py`: Pour consulter toutes les images des livres du site.
+
 
 # Fabriqué avec
 * [DILLINGER](https://dillinger.io) - Editeur de texte
