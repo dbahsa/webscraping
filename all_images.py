@@ -163,4 +163,4 @@ else:
 
                 les_images_du_site()  # -- Veuillez retirer le commentaire au début de cette ligne pour activer le script -- #
 
-                print("C'est fini. Veuillez vérifier la mise à jour du dossier: " + str(path.replace("./", "")))
+                print("C'est fini. Veuillez vérifier la mise à jour du dossier: " + str(path.replace("./", "").replace("/", "")))

@@ -221,4 +221,4 @@ else:
                                 
                 info_d_un_livre()
 
-                print("C'est fini. Veuillez vérifier la mise à jour du dossier: " + str(path.replace("./", "")))
+                print("C'est fini. Veuillez vérifier la mise à jour du dossier: " + str(path.replace("./", "").replace("/", "")))
