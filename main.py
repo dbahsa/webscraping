@@ -31,31 +31,47 @@ import all_images
 
 if __name__=="__main__":
         
-        message = "Choisissez votre script:\n Taper '1' pour extraire les données d'un livre d'une catégéorie quelconque;\n Taper '2' pour extraire les données de tous les livres d'une catégorie;\n Taper '3' pour scraper les données de tous les livres vendus sur le site;\n Taper '4' pour récupérer toutes les images page_produit du site."
+        message = "Pour choisir votre script:\n Taper '1' pour extraire les données d'un livre d'une catégéorie quelconque;\n Taper '2' pour extraire les données de tous les livres d'une catégorie;\n Taper '3' pour scraper les données de tous les livres vendus sur le site;\n Taper '4' pour récupérer toutes les images page_produit du site."
         print(message)
 
-        x = int(input("Taper votre choix: "))
-
         
+        def inputNumber(message):
+                """ la fonction inputNumber(message) est pour éviter de produire une erreur si l'utilisateur ne saisit pas un chiffre entre 1 et 4 """
+
+                while True:
+                
+                        try:
+                                choix = int(input(message))    
+                        except ValueError:
+                                print("Veuillez saisir un 'chiffre' entre 1 et 4, svp. Merci!")
+                        else:
+                                return choix
+                                break
+        
+
+        x = inputNumber("Taper votre choix: ") # -- cette variable saisit le choix du script à exécuter -- #
+        
+
         def all_scripts(user_choice):
                 
                 if user_choice == 1:
-                        print('Le script est lancé... Veuillez patienter un petit instant svp.')
+                        print('Traitement en cours... Merci de patienter un court instant svp.')
                         any_book.book_function2()
                         
                 elif user_choice == 2:
-                        print('Le script est lancé... Veuillez patienter un petit moment svp.')
+                        print('Traitement en cours... Merci de patienter un petit moment svp.')
                         books_any_category.books_function2()
                         
                 elif user_choice == 3:
-                        print('Le script est lancé... Veuillez patienter un petit moment svp.')
+                        print('Traitement en cours... Merci de patienter un moment svp.')
                         all_books_all_categories.all_books_function2()
                 
                 elif user_choice == 4:
-                        print('Le script est lancé... Cela va prendre quelques minutes. Merci de votre patience.')
+                        print('Traitement en cours... Cela va prendre quelques minutes. Merci de votre patience.')
                         all_images.image_function2()
                 
-                elif user_choice < 1 or user_choice > 4 :
-                        print('Votre choix est hors porté. Merci de relancer le script svp.')
+                else:
+                        user_choice < 1 or user_choice > 4 
+                        print('Votre choix doit être entre 1 et 4. Merci de relancer le script svp.')
         
         all_scripts(x)
